@@ -1,46 +1,25 @@
-import { useState } from 'react';
-import Header from './components/Layout/Header';
-import Meals from './components/Meals/Meals';
-import Cart from './components/Cart/Cart';
-import CartProvider from './store/CartProvider';
-import BillForm from './components/Bill/BillForm';
+import { Route, Switch, Redirect } from "react-router-dom";
+import BillsPage from "./pages/BillsPage";
+import Layout from '../src/components/Layout/Layout';
+import HomePage from "./pages/HomePage";
+
 
 function App() {
-  const [cartIsShown, setCartIsShown] = useState(false);
-  const [billForm,setOpetBillForm]=useState(false);
-  const [billButton,setBillButton]=useState(false);
-
-
-  const showCartHandler = () => {
-    setCartIsShown(true);
-  };
-
-  const hideCartHandler = () => {
-    setCartIsShown(false);
-  };
-  
-  const onOpenBillForm=()=>{
-    setOpetBillForm(true);
-  }
-  const onCloseBillForm=()=>{
-    setOpetBillForm(false);
-  }
-  const onCreateBill=()=>{
-    setBillButton(true);
-    console.log('hi')
-    console.log(billButton)
-    setOpetBillForm(false);
-  }
-
+ 
   return (
-    <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} onShowCreateBill={onOpenBillForm} showBillButton={billButton}/>
-      <main>
-        <Meals />
-        {billForm && <BillForm onClose={onCloseBillForm} onCreate={onCreateBill}/>}
-      </main>
-    </CartProvider>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/homepage" />
+        </Route>
+        <Route path="/homepage" exact>
+          <HomePage />
+        </Route>
+        <Route path="/billslist" exact>
+          <BillsPage />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 

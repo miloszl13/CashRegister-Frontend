@@ -28,4 +28,7 @@
     background-color: #8a2b06;
     color: white;
   }
-  
+  .formInput{
+    display: flex;
+    flex-direction: column;
+  }

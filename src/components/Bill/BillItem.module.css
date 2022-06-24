@@ -1,0 +1,39 @@
+.bill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .bill p {
+    margin: 0 0 0.25rem 0;
+    font-weight: 600;
+  }
+  
+  .info{
+    padding: 5px;
+  }
+  .price {
+    margin-top: 0.25rem;
+    font-weight: bold;
+    color: #ad5502;
+    font-size: 1.25rem;
+  }
+.delete{
+  font: inherit;
+  cursor: pointer;
+  color: white;
+  background-color: transparent;
+  border: 1px solid #106679;
+  background-color: #5a1a01;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+}
+.delete:hover,
+.delete:active{
+  background-color: #106679;
+  border-color: #5a1a01;
+  color: white;
+}

@@ -25,7 +25,6 @@ const AvailableMeals = () => {
 
       const loadedMeals = [];
 
-      console.log(responseData);
 
       for (const key in responseData) {
         loadedMeals.push({
@@ -66,7 +65,6 @@ const AvailableMeals = () => {
       key={product.id}
       id={product.id}
       name={product.name}
-      description={product.description}
       price={product.price}
     />
   ));

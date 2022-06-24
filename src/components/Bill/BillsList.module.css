@@ -1,0 +1,24 @@
+.bills {
+    max-width: 70rem;
+    width: 100%;
+    margin: 2rem auto;
+    animation:bills-appear 1s ease-out forwards;
+  }
+  
+  .bills ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+@keyframes bills-appear {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

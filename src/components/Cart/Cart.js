@@ -1,32 +1,35 @@
-import { useContext } from 'react';
-
-import Modal from '../UI/CartModal';
-import CartItem from './CartItem';
-import classes from './Cart.module.css';
-import CartContext from '../../store/bill-context';
+import { useSelector, useDispatch } from "react-redux";
+import Modal from "../UI/CartModal";
+import CartItem from "./CartItem";
+import classes from "./Cart.module.css";
+import { billActions } from "../../store/billSlice";
 
 const Cart = (props) => {
-  const cartCtx = useContext(CartContext);
-
-  const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
-  const hasItems = cartCtx.items.length > 0;
+  const cart = useSelector((state) => state.bill.items);
+  const totalBillPrice = useSelector((state) => state.bill.totalBillPrice);
+  const totalNum = useSelector((state) => state.bill.totalAmount);
+  const hasItems = totalNum > 0;
+  const billNumber = useSelector((state) => state.bill.billNumber);
+  const dispatch = useDispatch();
 
   const cartItemRemoveHandler = (id) => {
-    cartCtx.removeItem(id);
+    dispatch(billActions.removeItemFromCart(id));
   };
 
   const cartItemAddHandler = (item) => {
-    cartCtx.addItem(item);
+    dispatch(billActions.addItemToCart(item));
   };
+  
 
   const cartItems = (
-    <ul className={classes['cart-items']}>
-      {cartCtx.items.map((item) => (
+    <ul className={classes["cart-items"]}>
+      {cart.map((item) => (
         <CartItem
           key={item.id}
           name={item.name}
-          amount={item.amount}
+          amount={item.quantity}
           price={item.price}
+          totalPrice={item.price * item.quantity}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
           onAdd={cartItemAddHandler.bind(null, item)}
         />
@@ -36,16 +39,21 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
+      <div>
+        <span>Bill Number : </span>
+        <span>{billNumber}</span>
+        <button id="billButton" className={classes.billButton}>Change BN</button>
+      </div>
       {cartItems}
       <div className={classes.total}>
-        <span>Total Amount</span>
-        <span>{totalAmount}</span>
+        <span>Total Price</span>
+        <span>{totalBillPrice}din</span>
       </div>
       <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClose}>
+        <button id="closeButton" className={classes["button--alt"]} onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        {hasItems && <button id="billButton" className={classes.billButton}>Order</button>}
       </div>
     </Modal>
   );

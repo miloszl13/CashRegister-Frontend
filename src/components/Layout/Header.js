@@ -1,24 +1,23 @@
 import { Fragment } from 'react';
-
+import {useSelector,useDispatch} from 'react-redux'
 import HeaderCartButton from './HeaderCartButton';
-import mealsImage from '../../assets/meals.jpg';
 import classes from './Header.module.css';
+import { Link } from 'react-router-dom';
 
 const Header = (props) => {
-  const bill=props.billButton;
-
+  const showBill=useSelector(state=>state.ui.createdBill)
+  const billsList=useSelector(state=>state.ui.BillsListPage)
+ 
   return (
     <Fragment>
       <header className={classes.header}>
-        <h1>DELICIOUS</h1>
-        <button className={classes.btn} onClick={props.onShowCreateBill}>Create Bill</button>
-        {bill && <HeaderCartButton onClick={props.onShowCart}/>}
+        <Link style={{textDecoration:'none' ,color:'white'}} to='/homepage'><h1>HOMEPAGE</h1></Link>
+        {!billsList && <Link style={{textDecoration:'none'}} to='/billslist'><button className={classes.btn}>Bills List</button></Link>}
+        {!billsList && <button className={classes.btn} onClick={props.onShowProductForm}>Add new Product</button>}
+        {!showBill && !billsList && <button className={classes.btn} onClick={props.onShowCreateBill}>Create Bill</button>}
+        {showBill && !billsList && <HeaderCartButton onClick={props.onShowCart}/>}
       </header>
-      <div className={classes['main-image']}>
-        <img src={mealsImage} alt='A table full of delicious food!' />
-      </div>
     </Fragment>
   );
 };
-
 export default Header;

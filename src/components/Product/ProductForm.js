@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Modal from "../UI/CartModal";
+import Modal from "../UI/Modal";
 import classes from './ProductForm.module.css';
 
 const ProductForm=(props) =>{
@@ -18,8 +18,7 @@ const ProductForm=(props) =>{
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
-    console.log(data);
+    
   }
   
   const onSubmitHandler=(event)=>{
@@ -31,6 +30,7 @@ const ProductForm=(props) =>{
     const productObj={product_id:enteredId,name:enteredName,cost:enteredCost};    
     AddProduct(productObj);
     console.log(productObj);
+    props.onClose();
   }
 
   return (

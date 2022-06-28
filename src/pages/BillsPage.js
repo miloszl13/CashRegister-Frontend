@@ -1,24 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import BillsList from '../components/Bill/BillsList';
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { uiActions } from '../store/uiSlice';
+
 
 function BillsPage() {
     const dispatch=useDispatch();
-    const hideButtons=()=>{
-        dispatch(uiActions.isOnBillsListPage())
-      }
+    const hidedBtn=useSelector(state=>state.ui.BillsListPage);
 
+    const hideButtons=useCallback(()=>{
+        dispatch(uiActions.isOnBillsListPage())
+      },[dispatch]);
+    
     useEffect(()=>{
-        hideButtons();
-       
-    },[])
+        
+      hideButtons();
+        
+    },[hideButtons,hidedBtn])
+    
+   
 
   return (
     <div>
-        <BillsList/>
+        <BillsList />
+        
     </div>
   )
 }
 
-export default BillsPage
+export default BillsPage;

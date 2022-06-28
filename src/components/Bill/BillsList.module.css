@@ -3,12 +3,32 @@
     width: 100%;
     margin: 2rem auto;
     animation:bills-appear 1s ease-out forwards;
+    text-align: center;
   }
   
   .bills ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-top: 50px;
+  }
+  .btn{
+    font: inherit;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #106679;
+    background-color: #5a1a01;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
+    margin-top: 30px;
+  }
+  .btn:hover,
+  .btn:active{
+    background-color: #106679;
+    border-color: #5a1a01;
+    color: white;
   }
   
 @keyframes bills-appear {

@@ -25,6 +25,30 @@ const MealItemForm = (props) => {
     props.onAddToCart(enteredAmountNumber);
   };
 
+
+
+  async function deleteProduct(product) {
+    
+    const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
+      method: 'DELETE',
+      
+    });
+    const data = await response.json();
+    console.log(data);
+    
+  }
+
+  const onDeleteProduct=()=>{
+    if( window.confirm('Are you sure you want to delete that Product??')){
+      deleteProduct(props.id);
+    }
+    else{
+      return;
+    }
+  }
+  
+
+
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <Input
@@ -40,6 +64,7 @@ const MealItemForm = (props) => {
         }}
       />
       <button>+ Add</button>
+      <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>
       {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
   );

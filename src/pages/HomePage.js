@@ -1,4 +1,4 @@
-import React,{  useEffect } from 'react'
+import React,{  useEffect, useState } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
 import Meals from '../components/Meals/Meals';
 import BillForm from '../components/Bill/BillForm';
@@ -10,9 +10,11 @@ function HomePage() {
     const dispatch=useDispatch();
     const displayBillForm=useSelector(state=>state.ui.billFormVisible)
     const displayProductForm=useSelector(state=>state.ui.productFormVisible)
+    const [createdProduct,setCreatedProduct]=useState(false);
   
     const onOpenBillForm=()=>{
       dispatch(uiActions.showBillForm());
+     
     }
     const onCreateBill=()=>{
       dispatch(uiActions.showBillButton())
@@ -21,22 +23,22 @@ function HomePage() {
     
     const onOpenProductForm=()=>{
       dispatch(uiActions.showProductForm());
+      setCreatedProduct(prevState=>!prevState)
+      console.log(createdProduct)
     }
-    const onCreateProduct=()=>{
-  
-    }
+   
     
 
     useEffect(()=>{
       dispatch(uiActions.isNotOnBillsListPage())
-    },[])
+    },[createdProduct,dispatch])
   
     return (
 
         <div>
           <Meals/>
-          {displayBillForm && <BillForm onClose={onOpenBillForm} onCreate={onCreateBill}/>}
-          {displayProductForm && <ProductForm onClose={onOpenProductForm} onCreate={onCreateProduct}/>}
+          {displayBillForm && <BillForm onClose={onOpenBillForm} onCreate={onCreateBill} />}
+          {displayProductForm && <ProductForm onClose={onOpenProductForm} />}
         </div>
 
     );

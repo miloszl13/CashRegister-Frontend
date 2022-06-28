@@ -18,3 +18,22 @@
   background-color: #641e03;
   border-color: #641e03;
 }
+
+
+
+.form .delete {
+  font: inherit;
+  cursor: pointer;
+  background-color: #641e03;
+  border: 1px solid #641e03;
+  color: white;
+  padding: 0.25rem 2rem;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.form .delete:hover,
+.form .delete:active {
+  background-color: #106679;
+  border-color: #41b3d5;
+}

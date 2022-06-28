@@ -3,7 +3,6 @@ import BillsPage from "./pages/BillsPage";
 import Layout from '../src/components/Layout/Layout';
 import HomePage from "./pages/HomePage";
 
-
 function App() {
  
   return (

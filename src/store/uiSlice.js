@@ -9,6 +9,8 @@ const uiSlice = createSlice({
     notification: null,
     createdBill: false,
     BillsListPage: false,
+    billDetailIsVisible:false,
+    BillById:false
   },
   reducers: {
     showCart(state) {
@@ -29,6 +31,24 @@ const uiSlice = createSlice({
     showProductForm(state) {
       state.productFormVisible = !state.productFormVisible;
     },
+    showBillDetail(state){
+      state.billDetailIsVisible=true;
+    },
+    hideBillDetail(state){
+      state.billDetailIsVisible=false;
+    },
+    
+    hideBillByIdForm(state){
+      state.BillById=false;
+    },
+    showBillByIdForm(state){
+      state.BillById=true;
+    },
+
+
+
+
+    
     showNotification(state, action) {
       state.notification = {
         status: action.payload.status,

@@ -1,0 +1,19 @@
+
+.position .close{
+    font: inherit;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #106679;
+    background-color: #5a1a01;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
+    margin-bottom: 20px;
+  }
+  .position .close:hover,
+  .position .close:active{
+    background-color: #106679;
+    border-color: #5a1a01;
+    color: white;
+  }

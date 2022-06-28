@@ -3,21 +3,27 @@ import { createSlice } from '@reduxjs/toolkit';
 const billSlice=createSlice({
     name:'bill',
     initialState:{
-      
         items: [],
         totalAmount: 0,
         totalBillPrice:0,
         billNumber:'a',
     },
 reducers: {
-    replaceCart(state, action) {
-      state.totalQuantity = action.payload.totalQuantity;
-      state.items = action.payload.items;
+    // replaceCart(state, action) {
+    //   state.totalQuantity = action.payload.totalQuantity;
+    //   state.items = action.payload.items;
+    // },
+    resetBill(state){
+      state.items=[];
+      state.totalAmount=0;
+      state.totalBillPrice=0;
+      state.billNumber='';
     },
     createBill(state,action){
       const billNum=action.payload;
       state.billNumber=billNum;
     },
+   
     addItemToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);
@@ -26,11 +32,11 @@ reducers: {
         state.items.push({
           id: newItem.id,
           price: newItem.price,
-          quantity: 1,
+          quantity: newItem.amount,
           totalPrice: newItem.price,
           name: newItem.name,
         });
-        state.totalBillPrice=state.totalBillPrice+newItem.price;
+        state.totalBillPrice=state.totalBillPrice+(newItem.price*newItem.amount);
       } else {
         existingItem.quantity++;
         existingItem.totalPrice = existingItem.totalPrice + newItem.price;

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Modal from "../UI/CartModal";
+import Modal from "../UI/Modal";
 import classes from './BillForm.module.css'
 import {useDispatch} from 'react-redux'
 import { billActions } from "../../store/billSlice";

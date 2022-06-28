@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import Modal from "../UI/CartModal";
+import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
 import classes from "./Cart.module.css";
 import { billActions } from "../../store/billSlice";

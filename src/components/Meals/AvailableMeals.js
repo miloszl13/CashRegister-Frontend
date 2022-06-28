@@ -1,7 +1,7 @@
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useCallback} from 'react';
 
   
 
@@ -10,38 +10,39 @@ const AvailableMeals = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState();
 
+  const fetchProducts =useCallback( async () => {
+    const response = await fetch(
+      'https://localhost:7269/api/Product'
+    );
+
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
+
+    const responseData = await response.json();
+
+    const loadedMeals = [];
+
+
+    for (const key in responseData) {
+      loadedMeals.push({
+        id: responseData[key].product_id,
+        name: responseData[key].name,
+        price: responseData[key].cost,
+      });
+    }
+
+    setProducts(loadedMeals);
+    setIsLoading(false);
+  },[]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch(
-        'https://localhost:7269/api/Product'
-      );
-
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const responseData = await response.json();
-
-      const loadedMeals = [];
-
-
-      for (const key in responseData) {
-        loadedMeals.push({
-          id: responseData[key].product_id,
-          name: responseData[key].name,
-          price: responseData[key].cost,
-        });
-      }
-
-      setProducts(loadedMeals);
-      setIsLoading(false);
-    };
+    
     fetchProducts().catch((error) => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, []);
+  },[fetchProducts]);
 
   if (isLoading) {
     return (

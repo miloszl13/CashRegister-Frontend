@@ -9,6 +9,8 @@
 }
 
 .modal {
+  max-height: 40rem;
+  overflow-y: scroll;
   position: fixed;
   top: 20vh;
   left: 5%;
@@ -35,6 +37,6 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-5rem);
   }
 }

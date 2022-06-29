@@ -1,6 +1,8 @@
 import React from "react";
 import BillProducts from "./BillProducts";
 import Modal from "../UI/Modal";
+
+
 function BillDetail(props) {
   const billProducts = props.billproducts;
 
@@ -12,7 +14,7 @@ function BillDetail(props) {
       productCost={bp.products_cost}
     />
   ));
-
+   
   return (
     <Modal>
     <div>

@@ -3,7 +3,6 @@ import BillsList from '../components/Bill/BillsList';
 import {useDispatch,useSelector} from 'react-redux'
 import { uiActions } from '../store/uiSlice';
 
-
 function BillsPage() {
     const dispatch=useDispatch();
     const hidedBtn=useSelector(state=>state.ui.BillsListPage);
@@ -21,10 +20,13 @@ function BillsPage() {
    
 
   return (
-    <div>
-        <BillsList />
+  <div>
+     
         
+        <BillsList />
     </div>
+ 
+        
   )
 }
 

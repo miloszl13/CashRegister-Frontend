@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
+    notification: null,
     cartIsVisible: false,
     billFormVisible: false,
     productFormVisible: false,
-    notification: null,
     createdBill: false,
     BillsListPage: false,
     billDetailIsVisible:false,
@@ -51,11 +51,16 @@ const uiSlice = createSlice({
     
     showNotification(state, action) {
       state.notification = {
+        component:action.payload.component,
         status: action.payload.status,
         title: action.payload.title,
         message: action.payload.message,
       };
     },
+    setNotificationToNull(state){
+      state.notification=null;
+      
+    }
   },
 });
 

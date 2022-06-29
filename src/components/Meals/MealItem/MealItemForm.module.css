@@ -21,7 +21,7 @@
 
 
 
-.form .delete {
+ .delete {
   font: inherit;
   cursor: pointer;
   background-color: #641e03;
@@ -32,8 +32,8 @@
   font-weight: bold;
 }
 
-.form .delete:hover,
-.form .delete:active {
+ .delete:hover,
+.delete:active {
   background-color: #106679;
   border-color: #41b3d5;
 }

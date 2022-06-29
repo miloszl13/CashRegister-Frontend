@@ -30,7 +30,7 @@ const BillItem = (props) => {
     
     
     const onViewDetails=()=>{
-     
+      
       props.onViewDetail(props.id);
     }
 

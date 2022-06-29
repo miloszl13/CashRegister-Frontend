@@ -7,23 +7,24 @@ const billSlice=createSlice({
         totalAmount: 0,
         totalBillPrice:0,
         billNumber:'a',
+        creditCard:''
     },
 reducers: {
-    // replaceCart(state, action) {
-    //   state.totalQuantity = action.payload.totalQuantity;
-    //   state.items = action.payload.items;
-    // },
-    resetBill(state){
+  
+    resetToInitial(state){
       state.items=[];
       state.totalAmount=0;
       state.totalBillPrice=0;
-      state.billNumber='';
+      state.billNumber='a';
+      state.creditCard='';
     },
     createBill(state,action){
       const billNum=action.payload;
       state.billNumber=billNum;
     },
-   
+    setCreditCard(state,action){
+      state.creditCard=action.payload
+    },
     addItemToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);

@@ -1,28 +1,69 @@
-import Card from '../UI/Card';
-import MealItem from './MealItem/MealItem';
-import classes from './AvailableMeals.module.css';
-import {useState,useEffect,useCallback} from 'react';
+import Card from "../UI/Card";
+import MealItem from "./MealItem/MealItem";
+import classes from "./AvailableMeals.module.css";
+import { useState, useEffect, useCallback } from "react";
+import Notification from "../UI/Notification";
+import {useSelector,useDispatch} from 'react-redux'
+import { uiActions } from "../../store/uiSlice";
+import { productActions } from "../../store/productSlice";
 
-  
+
+function wait(ms){
+  var start = new Date().getTime();
+  var end = start;
+  while(end < start + ms) {
+    end = new Date().getTime();
+ }
+}
 
 const AvailableMeals = () => {
-  const[products,setProducts]=useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState();
+  const [products, setProducts] = useState([]);
+  const dispatch=useDispatch();
+  const notification=useSelector(state=>state.ui.notification)
+  const productsDb=useSelector(state=>state.products.items)
+//
+//
+//
+  const addProductsToBill=useCallback(async (bp) => {
+    const billProduct=JSON.stringify({bill_number:bp.billNumber,product_id:bp.product_id,product_quantity:bp.product_quantity,products_cost:bp.products_cost});
+   await fetch('https://localhost:7269/api/BillProduct/AddProductToBillProduct', {
+      method: 'POST',
+      body: billProduct,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  },[]);
 
-  const fetchProducts =useCallback( async () => {
-    const response = await fetch(
-      'https://localhost:7269/api/Product'
+  const deleteProduct=useCallback(async (product)=> {
+    const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
+      method: 'DELETE',
+      
+    });
+    const data = await response.json();
+    dispatch(productActions.deleteProduct(data))
+  },[dispatch]);
+
+
+  const fetchProducts = useCallback(async () => {
+    dispatch(
+      uiActions.showNotification({
+        component:'AvailableMeals',
+        status: 'pending',
+        title: 'Fetching...',
+        message: 'Fetching Products!',
+      })
     );
-
+    const response = await fetch("https://localhost:7269/api/Product");
+    const responseData=await response.json()
+  
     if (!response.ok) {
-      throw new Error('Something went wrong!');
+
+      throw new Error();
     }
 
-    const responseData = await response.json();
-
+    
     const loadedMeals = [];
-
 
     for (const key in responseData) {
       loadedMeals.push({
@@ -31,48 +72,49 @@ const AvailableMeals = () => {
         price: responseData[key].cost,
       });
     }
-
+     wait(500)
     setProducts(loadedMeals);
-    setIsLoading(false);
-  },[]);
+    dispatch(uiActions.setNotificationToNull())
+  }, [dispatch]);
 
   useEffect(() => {
-    
     fetchProducts().catch((error) => {
-      setIsLoading(false);
-      setHttpError(error.message);
+      dispatch(
+        uiActions.showNotification({
+          component:'AvailableMeals',
+          status: 'error',
+          title: 'Error!',
+          message: 'Connection error or product db is empty!',
+        })
+      );
+      setProducts([])
     });
-  },[fetchProducts]);
+  }, [productsDb,fetchProducts,dispatch]);
 
-  if (isLoading) {
-    return (
-      <section className={classes.MealsLoading}>
-        <p>Loading...</p>
-      </section>
-    );
-  }
-
-  if (httpError) {
-    return (
-      <section className={classes.MealsError}>
-        <p>{httpError}</p>
-      </section>
-    );
-  }
-
-
+  
   const mealsList = products.map((product) => (
     <MealItem
       key={product.id}
       id={product.id}
       name={product.name}
       price={product.price}
+      onAddProduct={addProductsToBill}
+      onDeleteProduct={deleteProduct}
     />
   ));
-
+  
+  
   return (
     <section className={classes.meals}>
       <Card>
+       
+        {notification && notification.component==='AvailableMeals' && 
+          <Notification
+            status={notification.status}
+            title={notification.title}
+            message={notification.message}
+          />
+        }
         <ul>{mealsList}</ul>
       </Card>
     </section>

@@ -5,7 +5,18 @@
   max-height: 20rem;
   overflow: auto;
 }
-
+.head{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid crimson;
+  padding-bottom: 20px;
+}
+.sp{
+  color:crimson;
+  font-size: large;
+  font-weight: 700;
+  
+}
 .total {
   display: flex;
   justify-content: space-between;
@@ -58,4 +69,14 @@
   background-color: #5a1a01;
   border-color: #5a1a01;
   color: white;
+}
+
+.billChange{
+  margin-top: 50px;
+  border-radius: 2px solid red;
+  margin-bottom: 50px;
+}
+.billChangeForm{
+  display:flex;
+  justify-content: space-between;
 }

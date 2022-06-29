@@ -16,7 +16,6 @@ const BillDetailModal = (props) => {
 
   if(billProducts.length===0 ){
     bpList =  <p>There is no products on this bill!</p>
-    console.log('empty array')
   }
   else if(billProducts.length>0){ 
     bpList = billProducts.map(bp => (

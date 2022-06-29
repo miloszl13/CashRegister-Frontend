@@ -33,7 +33,7 @@ function BillForm(props) {
   return (
     <Modal>
       <form onSubmit={onSubmitHandler}>
-        <label htmlFor="billNumber">Bill number</label>
+        <label htmlFor="billNumber">Bill number : </label>
         <input id="billNumber" type="text" ref={billInputRef}></input>
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClose}>

@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
-
+import {useSelector} from 'react-redux'
 import Input from '../../UI/Input';
 import classes from './MealItemForm.module.css';
 
 const MealItemForm = (props) => {
   const [amountIsValid, setAmountIsValid] = useState(true);
   const amountInputRef = useRef();
+  const billnumber=useSelector(state=>state.bill.billNumber);
+  const choosenBill=billnumber !== 'a';
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -27,20 +29,20 @@ const MealItemForm = (props) => {
 
 
 
-  async function deleteProduct(product) {
+  // async function deleteProduct(product) {
     
-    const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
-      method: 'DELETE',
+  //   const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
+  //     method: 'DELETE',
       
-    });
-    const data = await response.json();
-    console.log(data);
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
     
-  }
+  // }
 
   const onDeleteProduct=()=>{
     if( window.confirm('Are you sure you want to delete that Product??')){
-      deleteProduct(props.id);
+      props.onDelete(props.id);
     }
     else{
       return;
@@ -50,8 +52,9 @@ const MealItemForm = (props) => {
 
 
   return (
+    <div>
     <form className={classes.form} onSubmit={submitHandler}>
-      <Input
+      {choosenBill && <Input
         ref={amountInputRef}
         label='Amount'
         input={{
@@ -62,11 +65,13 @@ const MealItemForm = (props) => {
           step: '1',
           defaultValue: '1',
         }}
-      />
-      <button>+ Add</button>
-      <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>
+      />}
+      {choosenBill && <button>+ Add</button>}
+      
       {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
+    {!choosenBill && <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>}
+    </div>
   );
 };
 

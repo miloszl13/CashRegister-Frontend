@@ -6,7 +6,7 @@ const billSlice=createSlice({
         items: [],
         totalAmount: 0,
         totalBillPrice:0,
-        billNumber:'a',
+        billNumber:'',
         creditCard:''
     },
 reducers: {
@@ -15,7 +15,7 @@ reducers: {
       state.items=[];
       state.totalAmount=0;
       state.totalBillPrice=0;
-      state.billNumber='a';
+      state.billNumber='';
       state.creditCard='';
     },
     createBill(state,action){

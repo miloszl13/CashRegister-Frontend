@@ -9,22 +9,16 @@ import AvailableMeals from "../components/Meals/AvailableMeals";
 function HomePage() {
   const dispatch = useDispatch();
   const displayBillForm = useSelector((state) => state.ui.billFormVisible);
-  const displayProductForm = useSelector(
-    (state) => state.ui.productFormVisible
-  );
+  const displayProductForm = useSelector((state) => state.ui.productFormVisible);
   const [createdProduct, setCreatedProduct] = useState(false);
-
-
-
 
   
   const onOpenBillForm = () => {
     dispatch(uiActions.showBillForm());
+    dispatch(uiActions.setNotificationToNull())
+
   };
-  const onCreateBill = () => {
-    dispatch(uiActions.showBillButton());
-    dispatch(uiActions.showBillForm());
-  };
+
 
   const onOpenProductForm = () => {
     dispatch(uiActions.showProductForm());
@@ -41,9 +35,7 @@ function HomePage() {
   return (
     <div>
       <AvailableMeals />
-      {displayBillForm && (
-        <BillForm onClose={onOpenBillForm} onCreate={onCreateBill} />
-      )}
+      {displayBillForm && <BillForm onClose={onOpenBillForm} />}
       {displayProductForm && <ProductForm onClose={onOpenProductForm} />}
     </div>
   );

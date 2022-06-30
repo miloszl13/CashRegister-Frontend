@@ -7,7 +7,7 @@ const uiSlice = createSlice({
     cartIsVisible: false,
     billFormVisible: false,
     productFormVisible: false,
-    createdBill: false,
+    // createdBill: false,
     BillsListPage: false,
     billDetailIsVisible:false,
     BillById:false

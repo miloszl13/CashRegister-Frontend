@@ -7,7 +7,7 @@ const MealItemForm = (props) => {
   const [amountIsValid, setAmountIsValid] = useState(true);
   const amountInputRef = useRef();
   const billnumber=useSelector(state=>state.bill.billNumber);
-  const choosenBill=billnumber !== 'a';
+  const choosenBill=billnumber !== '';
 
   const submitHandler = (event) => {
     event.preventDefault();

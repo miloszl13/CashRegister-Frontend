@@ -28,8 +28,7 @@ const BillsList = () => {
   const byIdForm = useSelector((state) => state.ui.BillById);
   const [filteredBill,setFilteredBill]=useState({})
   const notification = useSelector((state) => state.ui.notification);
- 
-
+  const billsDb=useSelector(state=>state.billsHistory.history)
   
 
   const fetchBills = useCallback(async () => {
@@ -143,8 +142,10 @@ const BillsList = () => {
           message: 'Fetching bills failed!',
         })
       );
+      setBills([])
     });
-  }, [fetchBills,dispatch]);
+   
+  }, [billsDb,fetchBills,dispatch]);
 
   return (
     <section className={classes.bills}>
@@ -176,7 +177,7 @@ const BillsList = () => {
       )}
 
 
-         {!filtered && <button className={classes.btn} onClick={onSearchByIdForm}>Get bill by id</button>}
+         {!filtered && billsList.length !== 0 && <button className={classes.btn} onClick={onSearchByIdForm}>Get bill by id</button>}
          {filtered && <button className={classes.btn} onClick={backToNotFiltered}>Back to bills </button>}
           {!filtered && <ul>{billsList}</ul>}
       

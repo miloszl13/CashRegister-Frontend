@@ -1,10 +1,12 @@
 import React  from "react";
 import classes from "./BillItem.module.css";
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import { billsHistoryActions } from "../../store/billHistorySlice";
 
 const BillItem = (props) => {
   const billDetail=useSelector(state=>state.ui.billDetailIsVisible)
-  
+  const billsDb=useSelector(state=>state.billsHistory.history)
+  const dispatch=useDispatch();
 
 
   async function deleteBill(bn) {
@@ -15,12 +17,13 @@ const BillItem = (props) => {
     });
     const data = await response.json();
     console.log(data);
-    
+    dispatch(billsHistoryActions.deleteBill(data))
   }
 
   const onDeleteBill=()=>{
     if( window.confirm('Are you sure you want to delete that Bill??')){
       deleteBill(props.id);
+      
     }
     else{
       return;

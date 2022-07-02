@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { uiActions } from "../../store/uiSlice";
 import BillDetailModal from "./BillDetailModal";
-import BillById from "./BillById";
+import BillByIdForm from "./BillByIdForm";
 import Notification from "../UI/Notification";
 
 function wait(ms){
@@ -29,11 +29,12 @@ const BillsList = () => {
   const [filteredBill,setFilteredBill]=useState({})
   const notification = useSelector((state) => state.ui.notification);
   const billsDb=useSelector(state=>state.billsHistory.history)
-  
+  const [empty,setEmpty]=useState(false);
 
   const fetchBills = useCallback(async () => {
     dispatch(
       uiActions.showNotification({
+        component:'BillsList',
         status: 'pending',
         title: 'Fetching...',
         message: 'Fetching bills!',
@@ -71,6 +72,7 @@ const BillsList = () => {
    GetBillProducts(bn).catch(error=>{
       dispatch(
         uiActions.showNotification({
+          component:'BillsList',
           status: 'error',
           title: 'Error!',
           message: 'Fetching bills details failed!',
@@ -101,6 +103,7 @@ const BillsList = () => {
   //open search form
   const onSearchByIdForm = () => {
     dispatch(uiActions.showBillByIdForm());
+    dispatch(uiActions.setNotificationToNull())
   };
 
   //list output
@@ -119,8 +122,22 @@ const BillsList = () => {
   //method that filters bills
   const onFilterHandler = (billNum) => {
     const findedBill = bills.find((bill) => bill.id === billNum);
-    setFilteredBill(findedBill);
-    setFiltered(true);
+    if(findedBill !== undefined){
+      setFilteredBill(findedBill);
+      setFiltered(true);
+      setEmpty(false)
+    }
+    else{
+      setEmpty(true);
+      dispatch(
+        uiActions.showNotification({
+          component:'BillsList',
+          status: 'error',
+          title: 'Error!',
+          message: 'Bill with that bill number does not exist! ',
+        })
+      );
+    }
   };
   
   //back to not filtered list
@@ -137,6 +154,7 @@ const BillsList = () => {
     fetchBills().catch(error=>{
       dispatch(
         uiActions.showNotification({
+          component:'BillsList',
           status: 'error',
           title: 'Error!',
           message: 'Fetching bills failed!',
@@ -150,25 +168,14 @@ const BillsList = () => {
   return (
     <section className={classes.bills}>
       
-      {byIdForm && (
-        <BillById onClose={onCloseHandler} onFilter={onFilterHandler} />
-      )}
-      {billDetail && (
-        <BillDetailModal
-          bn={bp.bill_number}
-          tc={bp.total_cost}
-          cc={bp.credit_card}
-          products={ps}
-          //
-        />
-      )}
+     
 
-   
-      {!billDetail && (
+  
+      {/* {!billDetail && ( */}
         <Card>
 
 
-          {notification && (
+          {notification && notification.component==='BillsList' && (
           <Notification
           status={notification.status}
           title={notification.title}
@@ -177,7 +184,7 @@ const BillsList = () => {
       )}
 
 
-         {!filtered && billsList.length !== 0 && <button className={classes.btn} onClick={onSearchByIdForm}>Get bill by id</button>}
+         {!filtered && billsList.length !== 0 && <button className={classes.btn} onClick={onSearchByIdForm}>Get bill by bill number</button>}
          {filtered && <button className={classes.btn} onClick={backToNotFiltered}>Back to bills </button>}
           {!filtered && <ul>{billsList}</ul>}
       
@@ -191,8 +198,29 @@ const BillsList = () => {
                /> 
             </ul>
           )}
+           {byIdForm && (
+          <BillByIdForm onClose={onCloseHandler} onFilter={onFilterHandler} />
+          )}
+          
+          {billDetail && (
+            <BillDetailModal
+              bn={bp.bill_number}
+              tc={bp.total_cost}
+              cc={bp.credit_card}
+              products={ps}
+              //
+            />
+          )}
+          {filtered && empty && notification &&
+          <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+          />
+            
+          }
         </Card>
-      )}
+      
     </section>
   );
 };

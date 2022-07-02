@@ -21,9 +21,9 @@ const AvailableMeals = () => {
   const dispatch=useDispatch();
   const notification=useSelector(state=>state.ui.notification)
   const productsDb=useSelector(state=>state.products.items)
-//
-//
-//
+
+
+  //add products to bil method  
   const addProductsToBill=useCallback(async (bp) => {
     const billProduct=JSON.stringify({bill_number:bp.billNumber,product_id:bp.product_id,product_quantity:bp.product_quantity,products_cost:bp.products_cost});
    await fetch('https://localhost:7269/api/BillProduct/AddProductToBillProduct', {
@@ -34,17 +34,19 @@ const AvailableMeals = () => {
       }
     });
   },[]);
+  
 
+  //method for deleting product
   const deleteProduct=useCallback(async (product)=> {
     const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
       method: 'DELETE',
-      
     });
     const data = await response.json();
     dispatch(productActions.deleteProduct(data))
   },[dispatch]);
 
 
+  //method for fetching all products
   const fetchProducts = useCallback(async () => {
     dispatch(
       uiActions.showNotification({
@@ -56,13 +58,10 @@ const AvailableMeals = () => {
     );
     const response = await fetch("https://localhost:7269/api/Product");
     const responseData=await response.json()
-  
     if (!response.ok) {
 
       throw new Error();
     }
-
-    
     const loadedMeals = [];
 
     for (const key in responseData) {
@@ -72,11 +71,13 @@ const AvailableMeals = () => {
         price: responseData[key].cost,
       });
     }
-     wait(500)
+    wait(700)
     setProducts(loadedMeals);
     dispatch(uiActions.setNotificationToNull())
   }, [dispatch]);
 
+
+  //runs every time componenet re-render and if productsDb,fetchProducts or dispatch change
   useEffect(() => {
     fetchProducts().catch((error) => {
       dispatch(
@@ -92,6 +93,7 @@ const AvailableMeals = () => {
   }, [productsDb,fetchProducts,dispatch]);
 
   
+  //list of products from db
   const mealsList = products.map((product) => (
     <MealItem
       key={product.id}

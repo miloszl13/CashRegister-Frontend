@@ -20,10 +20,10 @@
   border: none;
   background-color: #106679;
   color: white;
-  padding: 0.75rem 3rem;
+  padding: 0.75rem 3rem; 
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-radius: 25px;
+  border-radius: 100px;
   font-weight: bold;
 }

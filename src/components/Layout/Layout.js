@@ -17,7 +17,10 @@ const Layout = (props) => {
   const onOpenBillForm = () => {
     dispatch(uiActions.showBillForm());
   };
- 
+  
+  const onOpenCurrExch=()=>{
+    dispatch(uiActions.showCurrExchForm());
+  }
 
   const onOpenProductForm = () => {
     dispatch(uiActions.showProductForm());
@@ -30,6 +33,7 @@ const Layout = (props) => {
         onShowCart={showCartHandler}
         onShowCreateBill={onOpenBillForm}
         onShowProductForm={onOpenProductForm}
+        onShowCurrExchForm={onOpenCurrExch}
       />
       <main className={classes.main}>{props.children}</main>
     </Fragment>

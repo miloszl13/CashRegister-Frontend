@@ -80,3 +80,6 @@
   display:flex;
   justify-content: space-between;
 }
+.closeButtons{
+  text-align: right;
+}

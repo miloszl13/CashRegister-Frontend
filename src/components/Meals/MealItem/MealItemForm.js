@@ -11,10 +11,8 @@ const MealItemForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
     const enteredAmount = amountInputRef.current.value;
     const enteredAmountNumber = +enteredAmount;
-
     if (
       enteredAmount.trim().length === 0 ||
       enteredAmountNumber < 1 ||
@@ -23,23 +21,10 @@ const MealItemForm = (props) => {
       setAmountIsValid(false);
       return;
     }
-
     props.onAddToCart(enteredAmountNumber);
   };
 
-
-
-  // async function deleteProduct(product) {
-    
-  //   const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
-  //     method: 'DELETE',
-      
-  //   });
-  //   const data = await response.json();
-  //   console.log(data);
-    
-  // }
-
+  //method that runs after click on delete product button
   const onDeleteProduct=()=>{
     if( window.confirm('Are you sure you want to delete that Product??')){
       props.onDelete(props.id);

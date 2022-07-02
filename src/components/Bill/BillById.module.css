@@ -11,7 +11,14 @@
     border-radius: 25px;
     margin-left: 1rem;
   }
-  
+  .actions .button:disabled,
+  .actions .button:disabled:hover,
+  .actions .button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
   .actions button:hover,
   .actions button:active {
     background-color: #5a1a01;

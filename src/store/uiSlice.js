@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
@@ -7,10 +8,10 @@ const uiSlice = createSlice({
     cartIsVisible: false,
     billFormVisible: false,
     productFormVisible: false,
-    // createdBill: false,
     BillsListPage: false,
     billDetailIsVisible:false,
-    BillById:false
+    BillById:false,
+    currEchFormVisible:false
   },
   reducers: {
     showCart(state) {
@@ -44,7 +45,9 @@ const uiSlice = createSlice({
     showBillByIdForm(state){
       state.BillById=true;
     },
-
+    showCurrExchForm(state){
+      state.currEchFormVisible=!state.currEchFormVisible;
+    },
 
 
 

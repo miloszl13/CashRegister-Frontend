@@ -3,7 +3,35 @@
     text-align: right;
   }
   
-  .actions button {
+  .actions .button {
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #106679;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
+    background-color: #5a1a01;
+    color: white;
+  }
+  .actions .button:disabled,
+  .actions .button:disabled:hover,
+  .actions .button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+  .actions .button:hover,
+  .actions .button:active {
+    background-color: white;
+    border-color: #5a1a01;
+    color: #5a1a01;
+  }
+  
+  .actions .button--alt {
+    color: #8a2b06;
+    background-color: white;
     font: inherit;
     cursor: pointer;
     background-color: transparent;
@@ -12,23 +40,13 @@
     border-radius: 25px;
     margin-left: 1rem;
   }
-  
-  .actions button:hover,
-  .actions button:active {
+  .actions .button--alt:hover,
+  .actions .button--alt:active {
     background-color: #5a1a01;
-    border-color: #5a1a01;
     color: white;
   }
   
-  .actions .button--alt {
-    color: #8a2b06;
-  }
-  
-  .actions .button {
-    background-color: #8a2b06;
-    color: white;
-  }
   .formInput{
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
   }

@@ -6,7 +6,7 @@ import productSlice from './productSlice';
 import billsHistorySlice from './billHistorySlice';
 
 const store = configureStore({
-  reducer: { ui: uiSlice.reducer, bill: billSlice.reducer,products:productSlice.reducer,billsHistory:billsHistorySlice.reducer },
+  reducer: { ui: uiSlice.reducer, bill: billSlice.reducer,products:productSlice.reducer,billsHistory:billsHistorySlice.reducer},
 });
 
 export default store;

@@ -51,8 +51,13 @@ function CurrencyExchangeForm(props) {
       //method that exchange amount 
       
         async function Exchange(curr1,amount,curr2) {
+          const token=localStorage.getItem('token')
             setNotificationObj({component:'CurrencyExchangeForm',status:'pending',title:'Exchanging',message:'Exchanging...'})
-            const response = await fetch(`https://localhost:7269/api/CurrencyExchange/Exchange/${curr1},${amount},${curr2}`);
+            const response = await fetch(`https://localhost:7269/api/CurrencyExchange/Exchange/${curr1},${amount},${curr2}`,{
+              headers:{
+                'Authorization': 'Bearer '+token
+              }
+            });
             const data=await response.json()
             const result = data.toFixed(2)
             setResultValue(result);
@@ -72,7 +77,10 @@ function CurrencyExchangeForm(props) {
             if((firstCurrencyValue.trim() !== '' && secondCurrencyValue.trim() !== '')&&((firstCurrencyValue.trim() === secondCurrencyValue.trim()))){
                 areSameCurrencies(true)
                 return;
-              }  
+              }
+            else {
+              areSameCurrencies(false)
+            }  
             Exchange(firstCurrencyValue,amountValue,secondCurrencyValue).catch(error=>{
               setNotificationObj({component:'ProductForm',status:'error',title:'Error!',message:'Failed to exchange!'})
             })

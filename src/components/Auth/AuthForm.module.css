@@ -1,15 +1,23 @@
 .auth {
     margin: 3rem auto;
     width: 95%;
-    max-width: 25rem;
+    max-width: 30rem;
     border-radius: 6px;
     background-color: #106679;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     text-align: center;
     color: white;
+    margin-top: 10%;
   }
-  
+  .auth button:disabled,
+  .auth button:disabled:hover,
+  .auth button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
   .auth h1 {
     text-align: center;
     color: white;
@@ -71,3 +79,20 @@
     background-color: transparent;
     color: #0e485a;
   }
+
+.control .invalid input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.control .invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
+
+.errorText {
+  color: #ee4d4d;
+  font-weight: 700;
+  font-size: large;
+}
+  

@@ -10,10 +10,12 @@ const BillItem = (props) => {
   const billNumb=useSelector(state=>state.bill.billNumber)
 
   async function deleteBill(bn) {
-    
+    const token=localStorage.getItem('token')
     const response = await fetch(`https://localhost:7269/api/Bill/delete/${bn}`, {
       method: 'DELETE',
-      
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
     });
     const data = await response.json();
     console.log(data);
@@ -55,7 +57,9 @@ const BillItem = (props) => {
         <div className={classes.info}>
           <p>Credit card: {props.creditCard}</p>
         </div>
-        <div className={classes.price}></div>
+        <div className={classes.info}>
+          <p>User id: {props.user}</p>
+        </div>
       </div>
       <div className={classes.buttons}>
         <button className={classes.delete} onClick={onDeleteBill}>Delete bill</button>

@@ -14,6 +14,8 @@ const isNotEmpty=(value)=>value.trim() !== '';
 function BillForm(props) {
   const dispatch=useDispatch();
   const notification=useSelector(state=>state.ui.notification)
+  const userId=useSelector(state=>state.bill.userId);
+  console.log(userId);
   //
   //
   const {
@@ -33,6 +35,7 @@ function BillForm(props) {
 //
 //
   async function CreateBill(billNumber) {
+    const token=localStorage.getItem('token')
     dispatch(
       uiActions.showNotification({
         component:'BillForm',
@@ -41,12 +44,13 @@ function BillForm(props) {
         message: 'Creating bill!',
       })
     );
-    const bill=JSON.stringify({bill_number:billNumber,total_cost: 0,credit_card:null,bill_Products:[]});
+    const bill=JSON.stringify({bill_number:billNumber,total_cost: 0,credit_card:null,user_id:userId,bill_Products:[]});
     const response = await fetch('https://localhost:7269/api/Bill/CreateNewBill', {
       method: 'POST',
       body: bill,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+token
       }
     });
     

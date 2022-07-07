@@ -6,44 +6,61 @@ import ProductForm from "../components/Product/ProductForm";
 import "../index.css";
 import AvailableMeals from "../components/Meals/AvailableMeals";
 import CurrencyExchangeForm from "../components/CurrencyExchange/CurrencyExchangeForm";
+//
+//
+import CreateNewUserForm from '../components/Auth/CreateNewUser'
 
 function HomePage() {
-  const dispatch = useDispatch();
   const displayBillForm = useSelector((state) => state.ui.billFormVisible);
-  const displayProductForm = useSelector((state) => state.ui.productFormVisible);
-  const displayCurrExch = useSelector((state)=>state.ui.currEchFormVisible)
+  const displayCurrExch = useSelector((state) => state.ui.currEchFormVisible);
 
   const [createdProduct, setCreatedProduct] = useState(false);
-
-  
+//
+//
+//
+const displayProductForm = useSelector((state) => state.ui.productFormVisible);
+const dispatch = useDispatch();
+const adminsMeals = useSelector((state) => state.ui.showAdminsMeals);
+const newUserForm = useSelector((state) => state.ui.createUserForm);
+const adminsName = useSelector((state) => state.ui.adminsName);
+const adminsLastname = useSelector((state) => state.ui.adminsLastName);
+const initial = useSelector(state=>state.ui.initialAdminsPage);
+const admin=useSelector(state=>state.ui.adminsPage)
+//
+//
+//
   const showBillForm = () => {
     dispatch(uiActions.showBillForm());
-    dispatch(uiActions.setNotificationToNull())
-
+    dispatch(uiActions.setNotificationToNull());
   };
-  
-  const onCloseCurrExch=()=>{
-    dispatch(uiActions.showCurrExchForm())
-  }
-  
+
+  const onCloseCurrExch = () => {
+    dispatch(uiActions.showCurrExchForm());
+  };
+
   const showProductForm = () => {
     dispatch(uiActions.showProductForm());
     setCreatedProduct((prevState) => !prevState);
     console.log(createdProduct);
-    dispatch(uiActions.setNotificationToNull())
+    dispatch(uiActions.setNotificationToNull());
   };
 
   useEffect(() => {
     dispatch(uiActions.isNotOnBillsListPage());
   }, [createdProduct, dispatch]);
 
-  
   return (
     <div>
-      <AvailableMeals />
+      {initial && admin && <div className="title">
+        <h4>Welcome {adminsName} {adminsLastname}</h4>
+      </div>}
+  
+      {(!admin || (!initial && adminsMeals)) && <AvailableMeals />}
+      {!initial && newUserForm && admin &&  <CreateNewUserForm />}
+      
       {displayBillForm && <BillForm onClose={showBillForm} />}
-      {displayProductForm && <ProductForm onClose={showProductForm} />}
-      {displayCurrExch && <CurrencyExchangeForm onClose={onCloseCurrExch}/>}
+      {displayProductForm && <ProductForm onClose={showProductForm} />} 
+      {displayCurrExch && <CurrencyExchangeForm onClose={onCloseCurrExch} />}
     </div>
   );
 }

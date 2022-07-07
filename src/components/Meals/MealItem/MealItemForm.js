@@ -8,6 +8,7 @@ const MealItemForm = (props) => {
   const amountInputRef = useRef();
   const billnumber=useSelector(state=>state.bill.billNumber);
   const choosenBill=billnumber !== '';
+  const isAdmin=useSelector(state=>state.ui.adminsPage)
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -55,7 +56,7 @@ const MealItemForm = (props) => {
       
       {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
-    {!choosenBill && <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>}
+    {!choosenBill && isAdmin && <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>}
     </div>
   );
 };

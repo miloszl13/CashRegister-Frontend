@@ -3,16 +3,26 @@
 * {
   box-sizing: border-box;
 }
-
+h4{
+  color: #41b3d5;
+  font-size: 5rem;
+  text-align: center;
+}
+.title{
+  background-color: white;
+  width: 40rem;
+  border-radius: 10%;
+  margin-top: 15rem;
+  margin-left: 25rem;
+}
 html {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
 body {
-  
   margin: 0;
   background-color: #3f3f3f;
-  background-image: url('./assets/meals.jpg');
+  background-image: url('./assets/meals1.jpg');
   background-size: cover;
 }
 .main-image {
@@ -50,7 +60,7 @@ body {
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-  width: 20rem;
+  width: 30rem;
   max-width: 100%;
 }
 
@@ -75,3 +85,4 @@ body {
 .error-text {
   color: #b40e0e;
 }
+

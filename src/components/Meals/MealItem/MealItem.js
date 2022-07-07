@@ -9,18 +9,6 @@ const MealItem = (props) => {
   
   const price = `$${props.price.toFixed(2)}`;
   
-  // async function addProductsToBill(bp) {
-  //   const billProduct=JSON.stringify({bill_number:bp.billNumber,product_id:bp.product_id,product_quantity:bp.product_quantity,products_cost:bp.products_cost});
-  //  await fetch('https://localhost:7269/api/BillProduct/AddProductToBillProduct', {
-  //     method: 'POST',
-  //     body: billProduct,
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   });
-  //   console.log(billProduct)
-  // }
-
   const addToCartHandler = amount => {
     dispatch(billActions.addItemToCart({
       id: props.id,

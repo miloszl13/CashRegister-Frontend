@@ -25,12 +25,14 @@ const AvailableMeals = () => {
 
   //add products to bil method  
   const addProductsToBill=useCallback(async (bp) => {
+    const token = localStorage.getItem('token')
     const billProduct=JSON.stringify({bill_number:bp.billNumber,product_id:bp.product_id,product_quantity:bp.product_quantity,products_cost:bp.products_cost});
    await fetch('https://localhost:7269/api/BillProduct/AddProductToBillProduct', {
       method: 'POST',
       body: billProduct,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+token
       }
     });
   },[]);
@@ -38,8 +40,12 @@ const AvailableMeals = () => {
 
   //method for deleting product
   const deleteProduct=useCallback(async (product)=> {
+    const token=localStorage.getItem('token')
     const response = await fetch(`https://localhost:7269/api/Product/DeleteProduct/${product}`, {
       method: 'DELETE',
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
     });
     const data = await response.json();
     dispatch(productActions.deleteProduct(data))

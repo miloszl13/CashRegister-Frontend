@@ -7,7 +7,8 @@ const billSlice=createSlice({
         totalAmount: 0,
         totalBillPrice:0,
         billNumber:'',
-        creditCard:''
+        creditCard:'',
+        userId:0,
     },
 reducers: {
   
@@ -25,6 +26,17 @@ reducers: {
     setCreditCard(state,action){
       state.creditCard=action.payload
     },
+    
+
+    setUserId(state,action){
+      state.userId=action.payload;
+    },
+    resetUserId(state,action){
+      state.userId=0;
+    },
+
+
+
     addItemToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);

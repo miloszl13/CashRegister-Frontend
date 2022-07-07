@@ -50,13 +50,15 @@ const ProductForm=(props) =>{
  
   //
   async function AddProduct(productObj) {
+    const token=localStorage.getItem('token')
     setNotificationObj({component:'ProductForm',status:'pending',title:'Sending',message:'Sending...'})
     const product=JSON.stringify(productObj);
     const response = await fetch('https://localhost:7269/api/Product/CreateProducts', {
       method: 'POST',
       body: product,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+token
       }
     });
     const data=await response.json()

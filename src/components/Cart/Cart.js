@@ -23,19 +23,24 @@ const Cart = (props) => {
 
 
   const addProductsToBill=useCallback(async (bp) => {
+    const token=localStorage.getItem('token')
     const billProduct=JSON.stringify({bill_number:bp.bill_number,product_id:bp.product_id,product_quantity:bp.product_quantity,products_cost:bp.products_cost});
     await fetch('https://localhost:7269/api/BillProduct/AddProductToBillProduct', {
       method: 'POST',
       body: billProduct,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+token
       }
     });
   },[]);
   const deleteProductFromBill=useCallback(async (billNumber,productId,quantity) => {
-    console.log(billNumber,productId,quantity)
+    const token=localStorage.getItem('token')
     const response=await fetch(`https://localhost:7269/api/BillProduct/deleteBillProduct/${billNumber},${productId},${quantity}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
       })
       const data=await response.json()
       console.log(data)
@@ -46,6 +51,7 @@ const Cart = (props) => {
   
   //Add credit card function
   async function AddCreditCard(billNumber,creditCard) {
+    const token=localStorage.getItem('token')
     dispatch(
       uiActions.showNotification({
         component:'Cart',
@@ -57,7 +63,10 @@ const Cart = (props) => {
     const response= await fetch(
       `https://localhost:7269/api/Bill/AddCreditCardToBill/${billNumber},${creditCard}`,
       {
-        method: 'POST'  
+        method: 'POST'  ,
+        headers:{
+          'Authorization': 'Bearer '+token
+        }
       }
     );
     const data=await response.json()
@@ -76,6 +85,7 @@ const Cart = (props) => {
   }
   //delete bill function
   async function deleteBill(bn) {
+    const token=localStorage.getItem('token')
     dispatch(
       uiActions.showNotification({
         component:'Cart',
@@ -86,6 +96,9 @@ const Cart = (props) => {
     );
     const response = await fetch(`https://localhost:7269/api/Bill/delete/${bn}`, {
       method: 'DELETE',
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
       
     });
     const data = await response.json();

@@ -40,8 +40,13 @@ const BillsList = () => {
         message: 'Fetching bills!',
       })
     );
-    
-    const response = await fetch("https://localhost:7269/api/Bill/GetAllBills");
+    const token=localStorage.getItem('token')
+    console.log(token)
+    const response = await fetch("https://localhost:7269/api/Bill/GetAllBills",{
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
+    });
 
     if (!response.ok) {
       
@@ -55,8 +60,10 @@ const BillsList = () => {
     for (const key in responseData) {
       loadedBills.push({
         id: responseData[key].bill_number,
+        user: responseData[key].user_id,
         totalCost: responseData[key].total_cost,
         creditCard: responseData[key].credit_card,
+
       });
     }
     setBills(loadedBills);
@@ -87,8 +94,12 @@ const BillsList = () => {
   };
 
   async function GetBillProducts(billNumber) {
-    
-    const response = await fetch(`https://localhost:7269/api/Bill/GetBillById${billNumber}`);
+    const token=localStorage.getItem('token')
+    const response = await fetch(`https://localhost:7269/api/Bill/GetBillById${billNumber}`,{
+      headers:{
+        'Authorization': 'Bearer '+token
+      }
+    });
     if (!response.ok) {
       
        throw new Error("Something went wrong!");
@@ -111,6 +122,7 @@ const BillsList = () => {
         <BillItem
           key={bill.id}
           id={bill.id}
+          user={bill.user}
           totalCost={bill.totalCost}
           creditCard={bill.creditCard}
           onViewDetail={onViewDetailModal}

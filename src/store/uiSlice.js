@@ -8,6 +8,9 @@ const uiSlice = createSlice({
     cartIsVisible: false,
     billFormVisible: false,
     productFormVisible: false,
+    //
+    updateProductFormVisible:false,
+    //
     BillsListPage: false,
     billDetailIsVisible:false,
     BillById:false,
@@ -22,6 +25,10 @@ const uiSlice = createSlice({
     initialAdminsPage:true,
   },
   reducers: {
+    showUpdateProductForm(state){
+     state.updateProductFormVisible =  !state.updateProductFormVisible;
+    },
+
     onInitialAdminsPage(state){
       state.initialAdminsPage=true;
     },

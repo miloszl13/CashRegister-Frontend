@@ -13,7 +13,6 @@ function BillForm(props) {
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.ui.notification);
   //
-  //
   const {
     value: billNumberValue,
     isValid: billNumberIsValid,
@@ -48,7 +47,7 @@ function BillForm(props) {
 
   return (
     <Modal>
-      <form onSubmit={onSubmitHandler} onFocus={clearNotificationHandler}>
+      <form data-testid='billbyid' onSubmit={onSubmitHandler} onFocus={clearNotificationHandler}>
         <div className={billNumberClasses}>
           <div>
             <label htmlFor="billNumber">Bill number : </label>

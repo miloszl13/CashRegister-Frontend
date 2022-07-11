@@ -50,7 +50,7 @@ const Header = (props) => {
         {!isAdmin && isLoggedIn && !billsList && <button className={classes.btn} onClick={props.onShowCurrExchForm}>Currency Exchange</button>}
         {!isAdmin && !isLoggedIn && <h1>Welcome</h1>}
 
-        {isLoggedIn && <button className={classes.btn} onClick={logoutHandler}>Logout</button>}
+        {isLoggedIn && <button data-testid='login' className={classes.btn} onClick={logoutHandler}>Logout</button>}
         
       </header>
     </Fragment>

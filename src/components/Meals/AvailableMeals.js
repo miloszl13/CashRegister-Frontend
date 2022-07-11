@@ -108,6 +108,9 @@ const AvailableMeals = () => {
       price={product.price}
       onAddProduct={addProductsToBill}
       onDeleteProduct={deleteProduct}
+      //
+      //
+      //update product
     />
   ));
   

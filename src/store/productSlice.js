@@ -4,6 +4,7 @@ const productSlice=createSlice({
     name:'products',
     initialState:{
         items: [],
+        selectedProductId:0
     },
 reducers: {
     addProduct(state,action){
@@ -14,8 +15,16 @@ reducers: {
     },
     setToEmpty(state){
         state.items=[];
-    }
+    },
 
+    
+
+    setSelecetedProductId(state,action){
+      state.selectedProductId=action.payload;  
+    },
+    resetSelectedProductId(state){
+      state.selectedProductId=0;
+    }
 
 }
 })

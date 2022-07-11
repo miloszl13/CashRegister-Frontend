@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import Input from '../../UI/Input';
 import classes from './MealItemForm.module.css';
+import { uiActions } from '../../../store/uiSlice';
+import { productActions } from '../../../store/productSlice';
 
 const MealItemForm = (props) => {
   const [amountIsValid, setAmountIsValid] = useState(true);
@@ -9,6 +11,7 @@ const MealItemForm = (props) => {
   const billnumber=useSelector(state=>state.bill.billNumber);
   const choosenBill=billnumber !== '';
   const isAdmin=useSelector(state=>state.ui.adminsPage)
+  const dispatch=useDispatch();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -34,12 +37,16 @@ const MealItemForm = (props) => {
       return;
     }
   }
-  
+  const onOpenUpdateProductForm = () => {
+    dispatch(uiActions.showUpdateProductForm());
+    dispatch(productActions.setSelecetedProductId(props.id));
+    console.log(props.id)
+  };
 
 
   return (
     <div>
-    <form className={classes.form} onSubmit={submitHandler}>
+    <form data-testid='mealItemForm' className={classes.form} onSubmit={submitHandler}>
       {choosenBill && <Input
         ref={amountInputRef}
         label='Amount'
@@ -56,7 +63,8 @@ const MealItemForm = (props) => {
       
       {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
-    {!choosenBill && isAdmin && <button className={classes.delete} onClick={onDeleteProduct}>Delete product</button>}
+    {!choosenBill && isAdmin && <button className={classes.btn} onClick={onDeleteProduct}>Delete product</button>}
+    {isAdmin && <button className={classes.btn} onClick={onOpenUpdateProductForm}>Update product</button>}
     </div>
   );
 };

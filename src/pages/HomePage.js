@@ -9,11 +9,12 @@ import CurrencyExchangeForm from "../components/CurrencyExchange/CurrencyExchang
 //
 //
 import CreateNewUserForm from '../components/Auth/CreateNewUser'
+import UpdateProductForm from '../components/Product/UpdateProductForm'
 
 function HomePage() {
   const displayBillForm = useSelector((state) => state.ui.billFormVisible);
   const displayCurrExch = useSelector((state) => state.ui.currEchFormVisible);
-
+  const displayUpdateProductForm = useSelector(state=>state.ui.updateProductFormVisible)
   const [createdProduct, setCreatedProduct] = useState(false);
 //
 //
@@ -45,6 +46,10 @@ const admin=useSelector(state=>state.ui.adminsPage)
     dispatch(uiActions.setNotificationToNull());
   };
 
+  const closeUpdateProductForm=()=>{
+    dispatch(uiActions.showUpdateProductForm())
+  }
+
   useEffect(() => {
     dispatch(uiActions.isNotOnBillsListPage());
   }, [createdProduct, dispatch]);
@@ -61,6 +66,7 @@ const admin=useSelector(state=>state.ui.adminsPage)
       {displayBillForm && <BillForm onClose={showBillForm} />}
       {displayProductForm && <ProductForm onClose={showProductForm} />} 
       {displayCurrExch && <CurrencyExchangeForm onClose={onCloseCurrExch} />}
+      {displayUpdateProductForm && <UpdateProductForm onClose={closeUpdateProductForm}/>}
     </div>
   );
 }

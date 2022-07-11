@@ -9,9 +9,10 @@ import useInput from '../../hooks/use-input';
 import Notification from '../UI/Notification';
 
 
-const isNotEmpty=(value)=>value.trim() !== '';
 
 const LoginForm = () => {
+const isNotEmpty=(value)=>value.trim() !== '';
+
     //
     //
     const {
@@ -86,16 +87,17 @@ const LoginForm = () => {
       }
     });
     const getUserData = await getUserResponse.json();
+    console.log(getUserData)
     dispatch(uiActions.setAdminsName(getUserData.firsName))
     dispatch(uiActions.setAdminsLastName(getUserData.lastName))
     if(getUserData.role === 'admin'){
-      history.replace('/admin')
+      // history.replace('/admin')
       dispatch(uiActions.isOnAdminsPage())
     }
     else if(getUserData.role === 'user'){
-      history.replace('/homepage')
+      
     }                                    
-    
+    history.replace('/homepage')
   }
 
   const submitHandler = (event) => {
